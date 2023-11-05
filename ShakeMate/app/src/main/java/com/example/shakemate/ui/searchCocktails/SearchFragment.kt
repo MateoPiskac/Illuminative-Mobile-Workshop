@@ -41,6 +41,7 @@ class SearchFragment : Fragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.fetchCocktails(query ?: "")
+                adapter.notifyDataSetChanged()
                 return true
             }
 
@@ -51,7 +52,9 @@ class SearchFragment : Fragment() {
 //                    handler.postDelayed({
 //                         Runnable {
                              viewModel.fetchCocktails(newText ?: "")
-//                             Log.e("SearchFragment", "onQueryTextChange: $newText")
+                    adapter.notifyDataSetChanged()
+
+                    //                             Log.e("SearchFragment", "onQueryTextChange: $newText")
 //                         }
 //                    }, 300)
                 }
