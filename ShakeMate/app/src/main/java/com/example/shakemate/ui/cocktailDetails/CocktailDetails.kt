@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.shakemate.R
 import com.example.shakemate.data.Cocktail
 import com.example.shakemate.databinding.FragmentCocktailDetailsBinding
 
@@ -30,7 +30,7 @@ class CocktailDetails(private val cocktail: Cocktail) : Fragment() {
         binding.preparationInstructions.text = cocktail.instructions
         activity?.setActionBar(binding.toolbar)
         binding.toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
+            findNavController().popBackStack()
         }
         return binding.root
 

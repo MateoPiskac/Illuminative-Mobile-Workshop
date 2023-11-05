@@ -19,7 +19,6 @@ class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var adapter: CocktailAdapter
     private val viewModel = CocktailViewModel()
-    val handler = android.os.Handler()
     val list = mutableListOf<Cocktail>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,27 +40,24 @@ class SearchFragment : Fragment() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.fetchCocktails(query ?: "")
+                adapter.notifyDataSetChanged()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
-                    if (newText.length > 3)
-//                        handler.removeCallbacksAndMessages(null)
-//                    handler.postDelayed({
-//                         Runnable {
-                             viewModel.fetchCocktails(newText ?: "")
-//                             Log.e("SearchFragment", "onQueryTextChange: $newText")
-//                         }
-//                    }, 300)
+                    if (newText.length > 3) {
+                        viewModel.fetchCocktails(newText)
+                        adapter.notifyDataSetChanged()
+                    }
                 }
                 return true
             }
         })
         binding.cocktailList.adapter = adapter
         viewModel.cocktailsLiveData.observe(viewLifecycleOwner) { cocktails ->
-            Log.e("debag",cocktails[0].toString())
-                adapter.submitList(cocktails)
+            Log.e("debag", cocktails[0].toString())
+            adapter.submitList(cocktails)
         }
         return binding.root
     }
@@ -69,7 +65,7 @@ class SearchFragment : Fragment() {
     private fun initAdapter() {
         adapter = CocktailAdapter(emptyList()) { cocktail ->
             val bundle = bundleOf(COCKTAIL to cocktail)
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, CocktailDetails(cocktail)).commit()
+            findNavController().navigate(R.id.action_searchFragment_to_cocktailDetails, bundle)
         }
     }
 
