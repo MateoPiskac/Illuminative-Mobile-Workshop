@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/cocktail_search_nav_graph" app:startDestination="@id/cocktailDetails">
+
+    <fragment android:id="@+id/cocktailDetails" android:name="com.example.shakemate.ui.cocktailDetails.CocktailDetails"
+        android:label="fragment_cocktail_details" tools:layout="@layout/fragment_cocktail_details">
+        <action android:id="@+id/action_cocktailDetails_to_searchFragment" app:destination="@id/searchFragment"/>
+        <action android:id="@+id/action_cocktailDetails_to_cocktailList2" app:destination="@id/cocktailList2"/>
+    </fragment>
+    <fragment android:id="@+id/searchFragment" android:name="com.example.shakemate.ui.searchCocktails.SearchFragment"
+        android:label="fragment_search" tools:layout="@layout/fragment_search">
+        <action android:id="@+id/action_searchFragment_to_cocktailDetails" app:destination="@id/cocktailDetails"/>
+        <action android:id="@+id/action_searchFragment_to_cocktailList2" app:destination="@id/cocktailList2"/>
+    </fragment>
+    <fragment android:id="@+id/cocktailList2" android:name="com.example.shakemate.ui.myCocktails.CocktailList"
+        android:label="fragment_cocktail_list" tools:layout="@layout/fragment_cocktail_list">
+        <action android:id="@+id/action_cocktailList2_to_searchFragment" app:destination="@id/searchFragment"/>
+        <action android:id="@+id/action_cocktailList2_to_cocktailDetails" app:destination="@id/cocktailDetails"/>
+    </fragment>
+</navigation>
